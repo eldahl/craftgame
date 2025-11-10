@@ -19,6 +19,7 @@ FetchContent_MakeAvailable(raylib)
 
 file(GLOB INCLUDES include/*.h include/*.cpp)
 file(GLOB SOURCES src/*.h src/*.cpp)
+file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
 #add_executable(${PROJECT_NAME} WIN32 src/main.cpp ${GLAD_SOURCES} ${INCLUDES} ${SOURCES})
@@ -27,4 +28,4 @@ add_executable(${PROJECT_NAME} src/main.cpp ${INCLUDES} ${SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
-target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/")
+
