@@ -1,3 +1,4 @@
+#include <cstdio>
 #include "map.h"
 #include "raylib.h"
 
