@@ -1,44 +1,77 @@
-#include "raylib.h"
-#include "player.h"
+#include "crafting_bench.h"
 #include "map.h"
+#include "player.h"
+#include "raylib.h"
+
+bool RectangleAABB(Rectangle a, Rectangle b) {
+  return (a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height &&
+          a.y + a.height > b.y);
+}
 
 int main(void) {
   InitWindow(800, 600, "Craft game");
-	SetTargetFPS(60);
+  SetTargetFPS(60);
 
-	Map m = Map();
-	player p = player();
+  Map m = Map();
+  Player p = Player("./assets/ph-player.png");
 
-	m.RegisterCellType("./assets/grass.png");
+  Crafting_Bench c = Crafting_Bench();
+  c.rect.x = 50;
+  c.rect.y = 50;
+
+  m.RegisterCellType("./assets/grass.png");
 
   while (!WindowShouldClose()) {
-    if (IsKeyDown(KEY_W)) {
-			p.Y -= 2;
-		}
+		p.doWalkingAnimation = false;
+		Rectangle newRect = Rectangle(p.rect);
+		if (IsKeyDown(KEY_W)) {
+			newRect.y -= 2;
+			if (!RectangleAABB(newRect, c.rect)) {
+				p.currentVerticalLine = 0;
+				p.rect.y -= 2;
+				p.doWalkingAnimation = true;
+			}
+    }
     if (IsKeyDown(KEY_S)) {
-			p.Y += 2;
-		}
+			newRect.y += 2;
+			if (!RectangleAABB(newRect, c.rect)) {
+				p.currentVerticalLine = 2;
+				p.rect.y += 2;
+				p.doWalkingAnimation = true;
+			}
+    }
     if (IsKeyDown(KEY_A)) {
-			p.X -= 2;
-		}
+			newRect.x -= 2;
+			if (!RectangleAABB(newRect, c.rect)) {
+				p.currentVerticalLine = 1;
+				p.rect.x -= 2;
+				p.doWalkingAnimation = true;
+			}
+    }
     if (IsKeyDown(KEY_D)) {
-			p.X += 2;
-		}
+			newRect.x += 2;
+			if (!RectangleAABB(newRect, c.rect)) {
+				p.currentVerticalLine = 3;
+				p.rect.x += 2;
+				p.doWalkingAnimation = true;
+			}
+    }
 
-
-		BeginDrawing();
+    BeginDrawing();
     {
       ClearBackground(RAYWHITE);
       m.Draw();
-			DrawText("Congrats! You created your first window!", 190, 200, 20,
-               LIGHTGRAY);
 
-			p.Draw();
+      c.Draw();
+
+      p.Draw();
+
+      DrawText("Congrats! You created your first window!", 190, 200, 20,
+               LIGHTGRAY);
     }
     EndDrawing();
   }
 
   CloseWindow();
-
   return 0;
 }

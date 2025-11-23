@@ -19,9 +19,12 @@ void Map::Draw() {
 void Map::setCell(int x, int y, int type) {}
 
 int Map::RegisterCellType(const char* filePath) {
-	Texture2D tex = LoadTexture(filePath);
+	Image img = LoadImage(filePath);
+	ImageResize(&img, 96, 96);
+	Texture2D tex = LoadTextureFromImage(img);
 	int typeCount = cellTypes.size() + 1;
 	cellTypes[typeCount] = tex;
 	printf("Added new cell type with texture %s to map.\n", filePath);
+	UnloadImage(img);
 	return typeCount;
 }

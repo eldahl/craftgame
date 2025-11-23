@@ -1,13 +1,25 @@
 #pragma once
 
-class player {
+#include "animated_sprite_same_size.h"
+#include "raylib.h"
+
+class Player : public AnimatedSprite_SameSize {
 
 public:
-	int X = 0, Y = 0;
+	bool doWalkingAnimation = true;
+
+	Player(const char* player_sheet_path) : AnimatedSprite_SameSize(player_sheet_path, 64, 64, 9, 4) {
+		rect.x = 150;
+		rect.y = 150;
+		rect.width = 32;
+		rect.height = 48;
+		offset.x = -16;
+		offset.y = -8;
+	};
+	~Player() {};
 
 	void Draw();
 
 private:
-	int width = 20, height = 40;
 
 };

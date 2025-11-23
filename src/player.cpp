@@ -1,6 +1,6 @@
 #include "player.h"
-#include "raylib.h"
+#include "animated_sprite_same_size.h"
 
-void player::Draw() {
-	DrawRectangle(X, Y, width, height, RED);
+void Player::Draw() {
+	AnimatedSprite_SameSize::Draw(this->doWalkingAnimation);
 }
