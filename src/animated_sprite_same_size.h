@@ -4,6 +4,9 @@
 #include "raylib.h"
 #include <vector>
 
+///
+/// SameSize refers to the spritesheet being equal length on both dimensions.
+///
 class AnimatedSprite_SameSize : public Object {
 public:
   Vector2 offset = Vector2();
