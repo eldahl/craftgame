@@ -38,11 +38,14 @@ public:
     // Load spritesheet.
     Image img = LoadImage(imagePath);
     texture = LoadTextureFromImage(img);
+    UnloadImage(img);
 
     // Calculate the rectangles of the images within the spritesheet.
     calculateSpriteRects();
   };
-  ~AnimatedSprite_SameSize() {};
+  ~AnimatedSprite_SameSize() {
+    //UnloadTexture(texture);
+  };
 
 	void SetOffset(Vector2 _offset) {
 		offset = _offset;
